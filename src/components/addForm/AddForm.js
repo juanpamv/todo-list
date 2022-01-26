@@ -1,50 +1,31 @@
 import React, { useState, useContext } from "react";
-import styled from "styled-components";
-import { colors } from "../../utils/variables";
+import { v4 as uuidv4 } from "uuid";
+
 import Title from "../title/Title";
 import { TasksContext } from "../../App";
-
-const StyledForm = styled.div`
-  padding: 20px 0;
-  border-bottom: 2px solid ${colors.gray};
-  margin-bottom: 20px;
-
-  div {
-    display: flex;
-  }
-
-  .input {
-    border: 1px solid ${colors.blue};
-    display: flex;
-    font-size: 18px;
-    margin-bottom: 20px;
-    padding: 10px 10px;
-    width: 100%;
-  }
-
-  .button {
-    background-color: ${colors.blue};
-    border: none;
-    color: ${colors.white};
-    font-size: 16px;
-    font-weight: bold;
-    padding: 10px 20px;
-  }
-`;
+import { StyledForm } from "./styles";
+import Button from "../button/Button";
 
 const AddForm = () => {
   const [value, setValue] = useState("");
   const { addTask } = useContext(TasksContext);
 
   const handleChange = (e) => {
+    // get input value
     const text = e.target.value;
     setValue(text);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTask({ task: value, done: false });
-    setValue("");
+
+    // prevent null values to be added
+    if (value !== "") {
+      // uuid added to create unique ids to be used as id for the element array
+      addTask({ label: value, done: false, id: uuidv4() });
+      // clear the input value
+      setValue("");
+    }
   };
 
   return (
@@ -61,7 +42,9 @@ const AddForm = () => {
           />
         </div>
         <div>
-          <input className="button" type="submit" value="Add Task" />
+          <Button type="submit" disabled={value === ""}>
+            Add Task
+          </Button>
         </div>
       </form>
     </StyledForm>

@@ -26,3 +26,5 @@ This project was developed taking in mind a simple setup to deliver a project th
 React context was used since this is going to manage a small amount of data. Redux is a better tool for more complex applications with bigger amounts of data and data operations.
 
 Material ui was used mostly to take advantage of its grid. Styled components was used to show knowledge on css and css in js, even though in a real project I will take more advantage of the library used to manage designs.
+
+Proptypes library was added for type checking on the component props, definitely something more robust like typescript could be better to ensure code quality
